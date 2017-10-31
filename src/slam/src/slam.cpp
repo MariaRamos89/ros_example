@@ -1,9 +1,9 @@
 #include "slam.hpp"
 
-slam::slam(noos::cloud::platform platf) 
-: callab_( noos::cloud::icp_slam("test", "icp.ini", noos::object::laser()),
-           std::bind(&slam::callback, this, std::placeholders::_1),
-           platf)
+slam::slam() 
+: callab_( std::bind(&slam::callback, this, std::placeholders::_1),
+           {"10.130.3.21", "9001", "test_token", "test"},
+           "raspberry_map", "icp.ini", noos::object::laser())
 {}
 
 void slam::read_laser(const sensor_msgs::LaserScan::ConstPtr & scan)
@@ -12,7 +12,6 @@ void slam::read_laser(const sensor_msgs::LaserScan::ConstPtr & scan)
     noos::object::laser obs;
     if (scan) { 
         int count = scan->scan_time / scan->time_increment;
-        std::cout << count << std::endl;
         //auto now = std::chrono::system_clock::now();
         obs.timestamp = 0; //now.time_since_epoch().count();
         obs.ranges.resize(count);
@@ -26,6 +25,7 @@ void slam::read_laser(const sensor_msgs::LaserScan::ConstPtr & scan)
         for (int i = 0; i < count; i++) {
             obs.ranges[i] = scan->ranges[i];
             obs.intensities[i] = (int)scan->intensities[i];
+            std::cout << obs.ranges[i] << std::endl;
         }
         process_data(obs);
     }
@@ -37,7 +37,7 @@ void slam::read_laser(const sensor_msgs::LaserScan::ConstPtr & scan)
 void slam::process_data(noos::object::laser & obs)
 {
     std::lock_guard<std::mutex> lock(mutex__);
-    callab_.object = noos::cloud::icp_slam("test", "icp.ini", obs); //map, config, laser
+    callab_.object = noos::cloud::icp_slam("raspberry_map", "icp.ini", obs); //map, config, laser
     callab_.send();
 }
 

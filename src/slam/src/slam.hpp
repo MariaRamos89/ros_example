@@ -3,6 +3,8 @@
 #include "includes.ihh"
 
 #define M_PIf 3.14159265358979f
+
+using namespace noos::cloud;
 /**
  * @brief read the laser data
  * @class slam
@@ -11,7 +13,7 @@ class slam
 {
 public:
     /// @brief constructor
-    slam(noos::cloud::platform platf);
+    slam();
 
     /// @brief read lasers
     void read_laser(const sensor_msgs::LaserScan::ConstPtr & scan);
@@ -24,8 +26,7 @@ private:
     void callback(noos::object::pose<float> pose3d);
 
     //callable object
-    noos::cloud::callable<
-        noos::cloud::icp_slam, true> callab_;
+    callable<icp_slam, true> callab_;
     //
     std::mutex mutex__;
 
