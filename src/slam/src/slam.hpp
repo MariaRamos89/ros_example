@@ -15,20 +15,20 @@ public:
     /// @brief constructor
     slam();
 
-    /// @brief read lasers
+    /// @brief read laser data
     void read_laser(const sensor_msgs::LaserScan::ConstPtr & scan);
 
-    /// @brief process data
+    /// @brief the data is sent to the platform
     void process_data(noos::object::laser & obs);
 
 private:
-    //callback
+    //Callback
     void callback(noos::object::pose<float> pose3d);
 
-    //callable object
+    //Callable object
     callable<icp_slam, true> callab_;
-    //
-    std::mutex mutex__;
+    //Count time between calls
+    double t_begin__;
 
 };
 
