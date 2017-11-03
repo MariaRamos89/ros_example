@@ -2,8 +2,8 @@
 
 slam::slam() 
 : callab_( std::bind(&slam::callback, this, std::placeholders::_1),
-           default_node,
-           "example_map", "icp.ini", noos::object::laser()),
+        {"10.130.3.21", "9001", "test_token", "test"},
+           "icp_map", "icp.ini", noos::object::laser()),
   t_begin__(ros::Time::now().toSec())
 {}
 
