@@ -12,7 +12,7 @@ from std_msgs.msg import String
 def stopMotors():
     
     # Handle each event individually
-    PerformMove(0, 0, 1)
+    PerformMove(0, 0, 1, 1)
     switchOffMotors()
 
 if __name__ == '__main__':

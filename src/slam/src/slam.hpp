@@ -22,13 +22,14 @@ public:
     void process_data(noos::object::laser & obs);
 
 private:
+
     //Callback
     void callback(noos::object::pose<float> pose3d);
-
     //Callable object
     callable<icp_slam, true> callab_;
     //Count time between calls
     double t_begin__;
+    double t_savemap__;
 
 };
 

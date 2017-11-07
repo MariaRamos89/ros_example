@@ -1,11 +1,19 @@
 <?xml version="1.0"?>
 <launch>
-    <env name="ROS_HOME" value="/home/ort/catkin_ws/" />  
+    <env name="ROS_HOME" value="/home/ort/ros_example/" />  
 
     <!-- RPLIDAR node -->
-    <node name="rplidar_ros" pkg="rplidar_ros" type="rplidarNodeClient" respawn="false" output="log" cwd="ROS_HOME" required="true"/>   
+    <!-- Rouslaunch is needed, not the node -->
+    <include file="/home/ort/ros_example/src/rplidar_ros/launch/rplidar.launch"/>
 
     <!-- SLAM node -->
     <node name="slam" pkg="slam" type="slam_node" respawn="false" output="screen" cwd="ROS_HOME" required="true"/>
+
+    <!-- Joystick node -->
+    <node name="joystick_node" pkg="joystick_node" type="joystick_node" respawn="false" output="log" cwd="ROS_HOME" required="true"/>
+
+    <!-- Motors node -->
+    <node name="motors" pkg="motors" type="motor_node.py" respawn="false" output="log" cwd="ROS_HOME" required="true"/>
+
 
 </launch>

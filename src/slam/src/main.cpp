@@ -1,6 +1,7 @@
 #include "includes.ihh"
 #include "slam.hpp"
 
+
 int main(int argc, char **argv)
 {
 	using namespace noos::cloud;
@@ -28,6 +29,7 @@ int main(int argc, char **argv)
 
 	// "/scan" is for RPLIDAR messages
 	ros::Subscriber sub = n.subscribe<sensor_msgs::LaserScan>("/scan", 1000, &slam::read_laser, &slam_obj);
+
 	ros::spin();
 	loop_rate.sleep(); 
 
